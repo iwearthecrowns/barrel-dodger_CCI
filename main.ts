@@ -1,3 +1,8 @@
+controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (mySprite2.isHittingTile(CollisionDirection.Bottom)) {
+        mySprite2.vy = -200
+    }
+})
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (mySprite.isHittingTile(CollisionDirection.Bottom)) {
         mySprite.vy = -200
@@ -7,6 +12,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, ot
     game.over(false)
 })
 let projectile: Sprite = null
+let mySprite2: Sprite = null
 let mySprite: Sprite = null
 tiles.setTilemap(tiles.createTilemap(hex`0a0008000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000101010101010101010101010101010101010101`, img`
     . . . . . . . . . . 
@@ -36,8 +42,28 @@ mySprite = sprites.create(img`
     . . . . . f f f f f f . . . . . 
     . . . . . f f . . f f . . . . . 
     `, SpriteKind.Player)
+mySprite2 = sprites.create(img`
+    . . . . 2 2 2 2 2 e . . . . . . 
+    . . . 2 2 2 2 d 2 2 e . . . . . 
+    . . e 2 2 2 2 2 2 2 e . . . . . 
+    . . e 2 2 2 2 2 2 2 e . . . . . 
+    . . e 2 2 2 2 2 e f f c c . . . 
+    . . e e 2 2 e f f f f b c . . . 
+    . e e e f e 2 b f f f d c . . . 
+    e e 2 2 d f 2 1 1 1 1 b c . . . 
+    e e 2 2 d f e e c c c . . . . . 
+    b 1 1 d e 2 2 e e c . . . . . . 
+    . f f e 2 2 2 2 e . . . . . . . 
+    . . f f d d 2 2 f f d d . . . . 
+    . . f f d d e e f f d d . . . . 
+    . . . f f f f . . . . . . . . . 
+    . . e e e f f f . . . . . . . . 
+    . . e e e e f f f . . . . . . . 
+    `, SpriteKind.Player)
 tiles.placeOnTile(mySprite, tiles.getTileLocation(1, 5))
 mySprite.ay = 500
+tiles.placeOnTile(mySprite2, tiles.getTileLocation(2, 5))
+mySprite2.ay = 500
 game.onUpdateInterval(randint(200, 2000), function () {
     projectile = sprites.createProjectileFromSide(img`
         . . . . . . . . . . . . . . . . 
